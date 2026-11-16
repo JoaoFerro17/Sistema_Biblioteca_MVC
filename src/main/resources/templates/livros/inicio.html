@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquivos de Minas Tirith | Biblioteca</title>
+    <title>BiblioSys | Gestão de Biblioteca</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
@@ -12,40 +12,67 @@
     <a th:href="@{/livros}" class="brand">
         <div class="ring-emblem">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="8"></circle>
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
         </div>
         <div class="brand-text">
-            <span class="brand-title">Minas Tirith</span>
-            <span class="brand-subtitle">Grande Arquivo</span>
+            <span class="brand-title">BiblioSys</span>
+            <span class="brand-subtitle">Acervo &amp; Gestão</span>
         </div>
     </a>
 
-    <span class="nav-section-label">Salões do Reino</span>
+    <span class="nav-section-label">Navegação</span>
     <nav class="nav-links">
         <a th:href="@{/livros}" class="active">
-            <span>🏛️</span> Salão Principal
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Painel Geral
         </a>
         <a th:href="@{/livros/livro}">
-            <span>📖</span> Tomos e Livros
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            Livros
         </a>
         <a th:href="@{/autores}">
-            <span>✒️</span> Cronistas e Autores
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            </svg>
+            Autores
         </a>
         <a th:href="@{/categorias}">
-            <span>📜</span> Ordens e Categorias
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Categorias
         </a>
         <a th:href="@{/usuarios}">
-            <span>🧝</span> Guardiões e Leitores
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            Usuários
         </a>
         <a th:href="@{/emprestimos}">
-            <span>⏳</span> Empréstimos
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Empréstimos
         </a>
     </nav>
 
     <div class="sidebar-footer">
-        "Nem todos os que vagam estão perdidos."
+        Sistema de Biblioteca &bull; v1.0
     </div>
 </aside>
 
@@ -53,64 +80,59 @@
     <main class="container">
         <section class="hero-header">
             <div class="hero-text">
-                <span class="hero-eyebrow">Guardião do Acervo</span>
-                <h1>Arquivos da Terra-Média</h1>
-                <p>Preservando tomos antigos, crônicas dos sábios e registros de empréstimo do reino.</p>
+                <span class="hero-eyebrow">Administração do Acervo</span>
+                <h1>Painel da Biblioteca</h1>
+                <p>Controle completo de livros, autores, categorias, usuários e registros de empréstimo.</p>
             </div>
 
-            <a th:href="@{/emprestimos/novo}" class="btn-primary">+ Registrar Empréstimo</a>
+            <a th:href="@{/emprestimos/novo}" class="btn-primary">+ Novo Empréstimo</a>
         </section>
 
         <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Tomos</span>
-                    <span>📖</span>
+                    <span class="stat-label">Livros</span>
                 </div>
                 <strong class="stat-value" th:text="${totalLivros ?: '1'}">1</strong>
-                <span class="stat-sub">Obras catalogadas</span>
+                <span class="stat-sub">Obras no catálogo</span>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Cronistas</span>
-                    <span>✒️</span>
+                    <span class="stat-label">Autores</span>
                 </div>
                 <strong class="stat-value" th:text="${totalAutores ?: '2'}">2</strong>
-                <span class="stat-sub">Autores registrados</span>
+                <span class="stat-sub">Escritores cadastrados</span>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Ordens</span>
-                    <span>📜</span>
+                    <span class="stat-label">Categorias</span>
                 </div>
                 <strong class="stat-value" th:text="${totalCategorias ?: '2'}">2</strong>
-                <span class="stat-sub">Categorias do saber</span>
+                <span class="stat-sub">Gêneros e áreas</span>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Leitores</span>
-                    <span>🧝</span>
+                    <span class="stat-label">Usuários</span>
                 </div>
                 <strong class="stat-value" th:text="${totalUsuarios ?: '2'}">2</strong>
-                <span class="stat-sub">Membros ativos</span>
+                <span class="stat-sub">Leitores cadastrados</span>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Em Circulação</span>
-                    <span>⏳</span>
+                    <span class="stat-label">Empréstimos</span>
                 </div>
                 <strong class="stat-value" th:text="${totalEmprestimos ?: '0'}">0</strong>
-                <span class="stat-sub">Tomos emprestados</span>
+                <span class="stat-sub">Retiradas registradas</span>
             </div>
         </section>
 
         <section>
             <div class="section-header">
-                <h2>Explorar os Arquivos</h2>
+                <h2>Módulos do Sistema</h2>
             </div>
 
             <div class="modules-grid">
@@ -122,8 +144,8 @@
                         </svg>
                     </div>
                     <div class="module-info">
-                        <h3>Tomos e Livros</h3>
-                        <p>Consultar títulos, autores, códigos ISBN e disponibilidade no acervo.</p>
+                        <h3>Livros</h3>
+                        <p>Consultar títulos, autores, códigos ISBN, categorias e disponibilidade.</p>
                     </div>
                     <span class="module-arrow">&rarr;</span>
                 </a>
@@ -136,8 +158,8 @@
                         </svg>
                     </div>
                     <div class="module-info">
-                        <h3>Cronistas e Autores</h3>
-                        <p>Mestres escribas, suas terras de origem e obras publicadas.</p>
+                        <h3>Autores</h3>
+                        <p>Gerenciar cadastro de autores, nacionalidades e obras publicadas.</p>
                     </div>
                     <span class="module-arrow">&rarr;</span>
                 </a>
@@ -149,8 +171,8 @@
                         </svg>
                     </div>
                     <div class="module-info">
-                        <h3>Ordens e Categorias</h3>
-                        <p>Classificação dos pergaminhos e livros por gênero ou área.</p>
+                        <h3>Categorias</h3>
+                        <p>Classificação dos livros por gênero literário ou área de conhecimento.</p>
                     </div>
                     <span class="module-arrow">&rarr;</span>
                 </a>
@@ -163,8 +185,8 @@
                         </svg>
                     </div>
                     <div class="module-info">
-                        <h3>Guardiões e Leitores</h3>
-                        <p>Cadastro dos estudiosos e membros autorizados a retirar obras.</p>
+                        <h3>Usuários</h3>
+                        <p>Dados dos alunos e membros autorizados a realizar empréstimos.</p>
                     </div>
                     <span class="module-arrow">&rarr;</span>
                 </a>
@@ -179,8 +201,8 @@
                         </svg>
                     </div>
                     <div class="module-info">
-                        <h3>Registro de Empréstimos</h3>
-                        <p>Controle de retiradas, prazos de retorno e devoluções.</p>
+                        <h3>Empréstimos</h3>
+                        <p>Registro de retirada, prazos previstos e devolução de livros.</p>
                     </div>
                     <span class="module-arrow">&rarr;</span>
                 </a>
@@ -189,7 +211,7 @@
     </main>
 
     <footer class="footer">
-        Arquivos de Minas Tirith &bull; Sistema de Gestão de Biblioteca &copy; 2026
+        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
     </footer>
 </div>
 
