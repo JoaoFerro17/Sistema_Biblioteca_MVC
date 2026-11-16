@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioSys | Livro</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-container">
+        <a th:href="@{/livros}" class="brand"><span>BiblioSys</span></a>
+        <nav class="nav-links">
+            <a th:href="@{/livros}">Início</a>
+            <a th:href="@{/livros/livro}" class="active">Livros</a>
+            <a th:href="@{/autores}">Autores</a>
+            <a th:href="@{/categorias}">Categorias</a>
+            <a th:href="@{/usuarios}">Usuários</a>
+            <a th:href="@{/emprestimos}">Empréstimos</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero-header">
+        <div class="hero-text">
+            <h1>Detalhes do Livro</h1>
+            <p>Informações da obra cadastrada no sistema.</p>
+        </div>
+        <a th:href="@{/livros}" class="btn-secondary">&larr; Voltar ao Início</a>
+    </section>
+
+    <div class="form-card">
+        <div class="form-stack">
+            <div>
+                <span class="stat-label">Título</span>
+                <h2 style="font-size: 1.4rem; margin-top: 0.25rem;" th:text="${livro.titulo}">Título</h2>
+            </div>
+
+            <div class="form-grid-2">
+                <div>
+                    <span class="stat-label">Autor</span>
+                    <p style="font-weight: 500; margin-top: 0.25rem;" th:text="${livro.autor}">Autor</p>
+                </div>
+                <div>
+                    <span class="stat-label">ISBN</span>
+                    <p style="font-weight: 500; margin-top: 0.25rem;" th:text="${livro.isbn}">ISBN</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

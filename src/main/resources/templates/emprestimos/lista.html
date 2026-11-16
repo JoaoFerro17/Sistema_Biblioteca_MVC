@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioSys | Empréstimos</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-container">
+        <a th:href="@{/livros}" class="brand"><span>BiblioSys</span></a>
+        <nav class="nav-links">
+            <a th:href="@{/livros}">Início</a>
+            <a th:href="@{/livros/livro}">Livros</a>
+            <a th:href="@{/autores}">Autores</a>
+            <a th:href="@{/categorias}">Categorias</a>
+            <a th:href="@{/usuarios}">Usuários</a>
+            <a th:href="@{/emprestimos}" class="active">Empréstimos</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero-header">
+        <div class="hero-text">
+            <h1>Empréstimos</h1>
+            <p>Controle de retiradas e devoluções de livros.</p>
+        </div>
+        <a th:href="@{/emprestimos/novo}" class="btn-primary">+ Novo Empréstimo</a>
+    </section>
+
+    <div class="table-card">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>Livro</th>
+                <th>Usuário</th>
+                <th>Data Retirada</th>
+                <th>Previsão Devolução</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(emprestimos)}">
+                <td colspan="5" style="text-align: center; color: #64748b; padding: 2rem;">
+                    Nenhum empréstimo registrado no momento.
+                </td>
+            </tr>
+            <tr th:each="emp : ${emprestimos}">
+                <td th:text="${emp.livro != null ? emp.livro.titulo : '-'}">Livro</td>
+                <td th:text="${emp.usuario != null ? emp.usuario.nome : '-'}">Usuário</td>
+                <td th:text="${emp.dataRetirada}">Data</td>
+                <td th:text="${emp.dataPrevistaDevolucao}">Previsão</td>
+                <td>
+                    <span th:if="${emp.dataDevolucao != null}" class="badge badge-success">Devolvido</span>
+                    <span th:if="${emp.dataDevolucao == null}" class="badge badge-info">Em andamento</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
