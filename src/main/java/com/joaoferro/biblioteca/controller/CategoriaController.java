@@ -1,9 +1,12 @@
 package com.joaoferro.biblioteca.controller;
 
 import com.joaoferro.biblioteca.model.Categoria;
+import com.joaoferro.biblioteca.model.Livro;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -13,11 +16,12 @@ import java.util.List;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-    private final List<Categoria> categorias = new ArrayList<>();
+    private List<Categoria> categorias = new ArrayList<>();
 
-    public CategoriaController() {
-        categorias.add(new Categoria("Tecnologia", "Livros de programação e engenharia de software"));
-        categorias.add(new Categoria("Literatura Brasileira", "Clássicos e romances nacionais"));
+    @PostMapping
+    public String cadastrar(@ModelAttribute Categoria categoria){
+        categorias.add(categoria);
+        return "redirect:/categorias";
     }
 
     @GetMapping

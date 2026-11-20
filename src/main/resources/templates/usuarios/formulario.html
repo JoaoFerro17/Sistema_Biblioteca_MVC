@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioSys | Novo Usuário</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<aside class="sidebar">
+    <a th:href="@{/livros}" class="brand">
+        <div class="ring-emblem">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+        </div>
+        <div class="brand-text">
+            <span class="brand-title">BiblioSys</span>
+            <span class="brand-subtitle">Acervo &amp; Gestão</span>
+        </div>
+    </a>
+
+    <span class="nav-section-label">Navegação</span>
+    <nav class="nav-links">
+        <a th:href="@{/livros}">Painel Geral</a>
+        <a th:href="@{/livros/lista}">Livros</a>
+        <a th:href="@{/autores}">Autores</a>
+        <a th:href="@{/categorias}">Categorias</a>
+        <a th:href="@{/usuarios}" class="active">Usuários</a>
+        <a th:href="@{/emprestimos}">Empréstimos</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        Sistema de Biblioteca &bull; v1.0
+    </div>
+</aside>
+
+<div class="main-wrapper">
+    <main class="container">
+        <section class="hero-header">
+            <div class="hero-text">
+                <span class="hero-eyebrow">Leitores</span>
+                <h1>Cadastrar Usuário</h1>
+                <p>Adicione um novo leitor ou membro ao sistema.</p>
+            </div>
+            <a th:href="@{/usuarios}" class="btn-secondary">&larr; Voltar</a>
+        </section>
+
+        <div class="form-card">
+            <form th:action="@{/usuarios}" th:object="${usuario}" method="post" class="form-stack">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" th:field="*{nome}" class="form-control" required placeholder="Ex: Mariana Silva">
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Matrícula</label>
+                        <input type="text" th:field="*{matricula}" class="form-control" required placeholder="Ex: 2026001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" th:field="*{email}" class="form-control" required placeholder="mariana@email.com">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/usuarios}" class="btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn-primary">Salvar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
+    </footer>
+</div>
+
+</body>
+</html>
