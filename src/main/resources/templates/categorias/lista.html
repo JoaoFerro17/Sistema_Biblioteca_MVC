@@ -2,49 +2,37 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>BiblioSys | Categorias</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca | Categorias</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<header class="topbar">
-    <div class="topbar-container">
-        <a th:href="@{/livros}" class="brand"><span>BiblioSys</span></a>
-        <nav class="nav-links">
-            <a th:href="@{/livros}">Início</a>
-            <a th:href="@{/livros/livro}">Livros</a>
-            <a th:href="@{/autores}">Autores</a>
-            <a th:href="@{/categorias}" class="active">Categorias</a>
-            <a th:href="@{/usuarios}">Usuários</a>
-            <a th:href="@{/emprestimos}">Empréstimos</a>
-        </nav>
-    </div>
-</header>
+
+<header th:replace="~{fragments/navbar :: topo('Classificação', 'Categorias', '+ Nova Categoria', '/categorias/novo')}"></header>
 
 <main class="container">
-    <section class="hero-header">
-        <div class="hero-text">
-            <h1>Categorias</h1>
-            <p>Classificação do acervo por gênero ou área.</p>
-        </div>
-        <a th:href="@{/categorias/novo}" class="btn-primary">+ Nova Categoria</a>
-    </section>
-
-    <div class="table-card">
-        <table class="data-table">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cat : ${categorias}">
-                <td><strong th:text="${cat.nome}">Nome</strong></td>
-                <td th:text="${cat.descricao}">Descrição</td>
-            </tr>
-            </tbody>
-        </table>
+    <div th:if="${#lists.isEmpty(categorias)}" class="paper-card empty-paper">
+        Nenhuma categoria cadastrada ainda. Clique em <strong>+ Nova Categoria</strong> para adicionar.
     </div>
+
+    <section th:if="${!#lists.isEmpty(categorias)}" class="books-grid">
+        <article th:each="categoria, stat : ${categorias}" class="paper-card book-card">
+            <div>
+                <h3 th:text="${categoria.nome}">Nome da Categoria</h3>
+                <p class="meta" th:text="${categoria.descricao}">Descrição da categoria</p>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{/categorias/editar/{index}(index=${stat.index})}" class="btn-sm">Editar</a>
+                <a th:href="@{/categorias/excluir/{index}(index=${stat.index})}" class="btn-sm btn-sm-danger">Excluir</a>
+            </div>
+        </article>
+    </section>
 </main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
+
 </body>
 </html>

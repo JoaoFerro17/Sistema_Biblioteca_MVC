@@ -2,51 +2,38 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>BiblioSys | Usuários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca | Usuários</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<header class="topbar">
-    <div class="topbar-container">
-        <a th:href="@{/livros}" class="brand"><span>BiblioSys</span></a>
-        <nav class="nav-links">
-            <a th:href="@{/livros}">Início</a>
-            <a th:href="@{/livros/livro}">Livros</a>
-            <a th:href="@{/autores}">Autores</a>
-            <a th:href="@{/categorias}">Categorias</a>
-            <a th:href="@{/usuarios}" class="active">Usuários</a>
-            <a th:href="@{/emprestimos}">Empréstimos</a>
-        </nav>
-    </div>
-</header>
+
+<header th:replace="~{fragments/navbar :: topo('Leitores', 'Usuários', '+ Novo Usuário', '/usuarios/novo')}"></header>
 
 <main class="container">
-    <section class="hero-header">
-        <div class="hero-text">
-            <h1>Usuários e Leitores</h1>
-            <p>Membros cadastrados para realizar empréstimos.</p>
-        </div>
-        <a th:href="@{/usuarios/novo}" class="btn-primary">+ Novo Usuário</a>
-    </section>
-
-    <div class="table-card">
-        <table class="data-table">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Matrícula</th>
-                <th>E-mail</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user : ${usuarios}">
-                <td><strong th:text="${user.nome}">Nome</strong></td>
-                <td th:text="${user.matricula}">Matrícula</td>
-                <td th:text="${user.email}">E-mail</td>
-            </tr>
-            </tbody>
-        </table>
+    <div th:if="${#lists.isEmpty(usuarios)}" class="paper-card empty-paper">
+        Nenhum usuário cadastrado ainda. Clique em <strong>+ Novo Usuário</strong> para adicionar.
     </div>
+
+    <section th:if="${!#lists.isEmpty(usuarios)}" class="books-grid">
+        <article th:each="usuario, stat : ${usuarios}" class="paper-card book-card">
+            <div>
+                <h3 th:text="${usuario.nome}">Nome do Usuário</h3>
+                <p class="meta"><strong>Matrícula:</strong> <span th:text="${usuario.matricula}">0000</span></p>
+                <p class="meta"><strong>E-mail:</strong> <span th:text="${usuario.email}">email@exemplo.com</span></p>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{/usuarios/editar/{index}(index=${stat.index})}" class="btn-sm">Editar</a>
+                <a th:href="@{/usuarios/excluir/{index}(index=${stat.index})}" class="btn-sm btn-sm-danger">Excluir</a>
+            </div>
+        </article>
+    </section>
 </main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
+
 </body>
 </html>

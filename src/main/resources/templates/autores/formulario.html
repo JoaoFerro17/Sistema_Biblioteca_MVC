@@ -3,75 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioSys | Novo Autor</title>
+    <title>Biblioteca | Cadastro de Autor</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<aside class="sidebar">
-    <a th:href="@{/livros}" class="brand">
-        <div class="ring-emblem">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-        </div>
-        <div class="brand-text">
-            <span class="brand-title">BiblioSys</span>
-            <span class="brand-subtitle">Acervo &amp; Gestão</span>
-        </div>
-    </a>
+<header th:replace="~{fragments/navbar :: topo('Escritores', ${index != null ? 'Editar Autor' : 'Novo Autor'}, null, null)}"></header>
 
-    <span class="nav-section-label">Navegação</span>
-    <nav class="nav-links">
-        <a th:href="@{/livros}">Painel Geral</a>
-        <a th:href="@{/livros/lista}">Livros</a>
-        <a th:href="@{/autores}" class="active">Autores</a>
-        <a th:href="@{/categorias}">Categorias</a>
-        <a th:href="@{/usuarios}">Usuários</a>
-        <a th:href="@{/emprestimos}">Empréstimos</a>
-    </nav>
+<main class="container">
+    <form th:action="@{/autores}" th:object="${autor}" method="post" class="form-wrapper">
+        <input type="hidden" name="index" th:if="${index != null}" th:value="${index}">
 
-    <div class="sidebar-footer">
-        Sistema de Biblioteca &bull; v1.0
-    </div>
-</aside>
-
-<div class="main-wrapper">
-    <main class="container">
-        <section class="hero-header">
-            <div class="hero-text">
-                <span class="hero-eyebrow">Escritores</span>
-                <h1>Cadastrar Autor</h1>
-                <p>Registre um novo autor no sistema.</p>
+        <div class="paper-card">
+            <div class="form-group">
+                <label for="nome">Nome do Autor</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Ex: Machado de Assis" required>
             </div>
-            <a th:href="@{/autores}" class="btn-secondary">&larr; Voltar</a>
-        </section>
 
-        <div class="form-card">
-            <form th:action="@{/autores}" th:object="${autor}" method="post" class="form-stack">
-                <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" th:field="*{nome}" class="form-control" required placeholder="Ex: Machado de Assis">
-                </div>
+            <div class="form-group">
+                <label for="nacionalidade">Nacionalidade</label>
+                <input type="text" id="nacionalidade" th:field="*{nacionalidade}" placeholder="Ex: Brasileira" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Nacionalidade</label>
-                    <input type="text" th:field="*{nacionalidade}" class="form-control" required placeholder="Ex: Brasileira">
-                </div>
-
-                <div class="form-actions">
-                    <a th:href="@{/autores}" class="btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn-primary">Salvar Autor</button>
-                </div>
-            </form>
+            <div class="form-group">
+                <label for="obrasPublicadas">Obras Publicadas (separadas por vírgula)</label>
+                <input type="text" id="obrasPublicadas" th:field="*{obrasPublicadas}" placeholder="Ex: Dom Casmurro, Memórias Póstumas">
+            </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
-    </footer>
-</div>
+        <div style="display: flex; gap: 0.8rem;">
+            <button type="submit" class="btn-primary">Salvar Autor</button>
+            <a th:href="@{/autores}" class="btn-light">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
 
 </body>
 </html>

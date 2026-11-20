@@ -3,87 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioSys | Novo Empréstimo</title>
+    <title>Biblioteca | Emprestar</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<aside class="sidebar">
-    <a th:href="@{/livros}" class="brand">
-        <div class="ring-emblem">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-        </div>
-        <div class="brand-text">
-            <span class="brand-title">BiblioSys</span>
-            <span class="brand-subtitle">Acervo &amp; Gestão</span>
-        </div>
-    </a>
+<header th:replace="~{fragments/navbar :: topo('Empréstimos', ${index != null ? 'Editar Empréstimo' : 'Emprestar'}, null, null)}"></header>
 
-    <span class="nav-section-label">Navegação</span>
-    <nav class="nav-links">
-        <a th:href="@{/livros}">Painel Geral</a>
-        <a th:href="@{/livros/lista}">Livros</a>
-        <a th:href="@{/autores}">Autores</a>
-        <a th:href="@{/categorias}">Categorias</a>
-        <a th:href="@{/usuarios}">Usuários</a>
-        <a th:href="@{/emprestimos}" class="active">Empréstimos</a>
-    </nav>
+<main class="container">
+    <form th:action="@{/emprestimos}" th:object="${emprestimo}" method="post" class="form-wrapper">
+        <input type="hidden" name="index" th:if="${index != null}" th:value="${index}">
 
-    <div class="sidebar-footer">
-        Sistema de Biblioteca &bull; v1.0
-    </div>
-</aside>
-
-<div class="main-wrapper">
-    <main class="container">
-        <section class="hero-header">
-            <div class="hero-text">
-                <span class="hero-eyebrow">Circulação</span>
-                <h1>Registrar Empréstimo</h1>
-                <p>Informe os dados da retirada de livro.</p>
+        <div class="paper-card">
+            <div class="form-group">
+                <label for="livroTitulo">Título do Livro</label>
+                <input type="text" id="livroTitulo" th:field="*{livro.titulo}" placeholder="Ex: Dom Casmurro" required>
             </div>
-            <a th:href="@{/emprestimos}" class="btn-secondary">&larr; Voltar</a>
-        </section>
 
-        <div class="form-card">
-            <form th:action="@{/emprestimos}" th:object="${emprestimo}" method="post" class="form-stack">
-                <div class="form-group">
-                    <label>Título do Livro</label>
-                    <input type="text" th:field="*{livro.titulo}" class="form-control" required placeholder="Ex: Dom Casmurro">
-                </div>
+            <div class="form-group">
+                <label for="usuarioNome">Nome do Usuário</label>
+                <input type="text" id="usuarioNome" th:field="*{usuario.nome}" placeholder="Ex: Maria Silva" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Nome do Usuário</label>
-                    <input type="text" th:field="*{usuario.nome}" class="form-control" required placeholder="Ex: Mariana Silva">
-                </div>
+            <div class="form-group">
+                <label for="dataRetirada">Data de Retirada</label>
+                <input type="date" id="dataRetirada" th:field="*{dataRetirada}" required>
+            </div>
 
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Data de Retirada</label>
-                        <input type="date" th:field="*{dataRetirada}" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Previsão de Devolução</label>
-                        <input type="date" th:field="*{dataPrevistaDevolucao}" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <a th:href="@{/emprestimos}" class="btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn-primary">Salvar Empréstimo</button>
-                </div>
-            </form>
+            <div class="form-group">
+                <label for="dataPrevistaDevolucao">Previsão de Devolução</label>
+                <input type="date" id="dataPrevistaDevolucao" th:field="*{dataPrevistaDevolucao}" required>
+            </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
-    </footer>
-</div>
+        <div style="display: flex; gap: 0.8rem;">
+            <button type="submit" class="btn-primary">Emprestar</button>
+            <a th:href="@{/emprestimos}" class="btn-light">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
 
 </body>
 </html>

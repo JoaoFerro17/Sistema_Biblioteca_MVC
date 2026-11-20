@@ -2,49 +2,47 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>BiblioSys | Autores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca | Autores</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<header class="topbar">
-    <div class="topbar-container">
-        <a th:href="@{/livros}" class="brand"><span>BiblioSys</span></a>
-        <nav class="nav-links">
-            <a th:href="@{/livros}">Início</a>
-            <a th:href="@{/livros/livro}">Livros</a>
-            <a th:href="@{/autores}" class="active">Autores</a>
-            <a th:href="@{/categorias}">Categorias</a>
-            <a th:href="@{/usuarios}">Usuários</a>
-            <a th:href="@{/emprestimos}">Empréstimos</a>
-        </nav>
-    </div>
-</header>
+
+<header th:replace="~{fragments/navbar :: topo('Escritores', 'Autores', '+ Novo Autor', '/autores/novo')}"></header>
 
 <main class="container">
-    <section class="hero-header">
-        <div class="hero-text">
-            <h1>Autores</h1>
-            <p>Lista de autores cadastrados no sistema.</p>
-        </div>
-        <a th:href="@{/autores/novo}" class="btn-primary">+ Novo Autor</a>
-    </section>
-
-    <div class="table-card">
-        <table class="data-table">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Nacionalidade</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="autor : ${autores}">
-                <td><strong th:text="${autor.nome}">Nome</strong></td>
-                <td th:text="${autor.nacionalidade}">Nacionalidade</td>
-            </tr>
-            </tbody>
-        </table>
+    <div th:if="${#lists.isEmpty(autores)}" class="paper-card empty-paper">
+        Nenhum autor cadastrado ainda. Clique em <strong>+ Novo Autor</strong> para adicionar.
     </div>
+
+    <section th:if="${!#lists.isEmpty(autores)}" class="strip-list">
+        <article th:each="autor, stat : ${autores}" class="paper-card strip-card">
+            <div class="strip-info">
+                <div class="strip-field">
+                    <span class="strip-label">Autor</span>
+                    <span class="strip-value" th:text="${autor.nome}">Nome</span>
+                </div>
+                <div class="strip-field">
+                    <span class="strip-label">Nacionalidade</span>
+                    <span class="strip-value" th:text="${autor.nacionalidade}">Nacionalidade</span>
+                </div>
+                <div class="strip-field" th:if="${!#lists.isEmpty(autor.obrasPublicadas)}">
+                    <span class="strip-label">Obras</span>
+                    <span class="strip-value" th:text="${#strings.listJoin(autor.obrasPublicadas, ', ')}">Obras</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{/autores/editar/{index}(index=${stat.index})}" class="btn-sm">Editar</a>
+                <a th:href="@{/autores/excluir/{index}(index=${stat.index})}" class="btn-sm btn-sm-danger">Excluir</a>
+            </div>
+        </article>
+    </section>
 </main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
+
 </body>
 </html>

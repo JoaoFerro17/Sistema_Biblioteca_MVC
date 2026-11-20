@@ -3,75 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioSys | Nova Categoria</title>
+    <title>Biblioteca | Cadastro de Categoria</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<aside class="sidebar">
-    <a th:href="@{/livros}" class="brand">
-        <div class="ring-emblem">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-        </div>
-        <div class="brand-text">
-            <span class="brand-title">BiblioSys</span>
-            <span class="brand-subtitle">Acervo &amp; Gestão</span>
-        </div>
-    </a>
+<header th:replace="~{fragments/navbar :: topo('Classificação', ${index != null ? 'Editar Categoria' : 'Nova Categoria'}, null, null)}"></header>
 
-    <span class="nav-section-label">Navegação</span>
-    <nav class="nav-links">
-        <a th:href="@{/livros}">Painel Geral</a>
-        <a th:href="@{/livros/lista}">Livros</a>
-        <a th:href="@{/autores}">Autores</a>
-        <a th:href="@{/categorias}" class="active">Categorias</a>
-        <a th:href="@{/usuarios}">Usuários</a>
-        <a th:href="@{/emprestimos}">Empréstimos</a>
-    </nav>
+<main class="container">
+    <form th:action="@{/categorias}" th:object="${categoria}" method="post" class="form-wrapper">
+        <input type="hidden" name="index" th:if="${index != null}" th:value="${index}">
 
-    <div class="sidebar-footer">
-        Sistema de Biblioteca &bull; v1.0
-    </div>
-</aside>
-
-<div class="main-wrapper">
-    <main class="container">
-        <section class="hero-header">
-            <div class="hero-text">
-                <span class="hero-eyebrow">Classificação</span>
-                <h1>Cadastrar Categoria</h1>
-                <p>Crie um novo gênero ou área de conhecimento.</p>
+        <div class="paper-card">
+            <div class="form-group">
+                <label for="nome">Nome da Categoria</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Ex: Romance Brasileiro" required>
             </div>
-            <a th:href="@{/categorias}" class="btn-secondary">&larr; Voltar</a>
-        </section>
 
-        <div class="form-card">
-            <form th:action="@{/categorias}" th:object="${categoria}" method="post" class="form-stack">
-                <div class="form-group">
-                    <label>Nome da Categoria</label>
-                    <input type="text" th:field="*{nome}" class="form-control" required placeholder="Ex: Fantasia Épica">
-                </div>
-
-                <div class="form-group">
-                    <label>Descrição</label>
-                    <input type="text" th:field="*{descricao}" class="form-control" required placeholder="Ex: Obras de ficção fantástica e aventura">
-                </div>
-
-                <div class="form-actions">
-                    <a th:href="@{/categorias}" class="btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn-primary">Salvar Categoria</button>
-                </div>
-            </form>
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" th:field="*{descricao}" placeholder="Ex: Obras clássicas e contemporâneas" required>
+            </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
-    </footer>
-</div>
+        <div style="display: flex; gap: 0.8rem;">
+            <button type="submit" class="btn-primary">Salvar Categoria</button>
+            <a th:href="@{/categorias}" class="btn-light">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
 
 </body>
 </html>

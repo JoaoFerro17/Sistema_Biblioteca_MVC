@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="topo(subtitulo, titulo, acaoTexto, acaoUrl)" class="topbar">
+    <div class="topbar-left">
+        <button type="button" class="menu-toggle" onclick="document.getElementById('navDropdown').classList.toggle('open')">
+            &#9776; Menu
+        </button>
+        <nav id="navDropdown" class="dropdown-nav">
+            <a th:href="@{/livros}">Início</a>
+            <a th:href="@{/livros/lista}">Livros</a>
+            <a th:href="@{/autores}">Autores</a>
+            <a th:href="@{/categorias}">Categorias</a>
+            <a th:href="@{/usuarios}">Usuários</a>
+            <a th:href="@{/emprestimos}">Empréstimos</a>
+        </nav>
+    </div>
+
+    <div class="topbar-center">
+        <span class="topbar-eyebrow" th:text="${subtitulo}">Seção</span>
+        <h1 class="topbar-title" th:text="${titulo}">Título</h1>
+    </div>
+
+    <div class="topbar-right">
+        <a th:if="${acaoTexto != null}" th:href="@{${acaoUrl}}" class="btn-primary" th:text="${acaoTexto}">+ Novo</a>
+        <a th:href="@{/livros}" class="btn-light">Voltar</a>
+    </div>
+</header>
+</body>
+</html>

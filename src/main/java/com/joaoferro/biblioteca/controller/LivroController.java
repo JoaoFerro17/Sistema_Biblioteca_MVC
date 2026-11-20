@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +18,6 @@ import java.util.List;
 public class LivroController {
 
     private List<Livro> livros = new ArrayList<>();
-
-    @PostMapping
-    public String cadastrar(@ModelAttribute Livro livro) {
-        livros.add(livro);
-        return "redirect:/livros/lista";
-    }
 
     @GetMapping
     public String inicio() {
@@ -38,6 +34,29 @@ public class LivroController {
     public String formulario(Model model) {
         model.addAttribute("livro", new Livro());
         return "livros/formulario";
+    }
+
+    @PostMapping
+    public String salvar(@ModelAttribute Livro livro, @RequestParam(required = false) Integer index) {
+        if (index == null) {
+            livros.add(livro);
+        } else {
+            livros.set(index, livro);
+        }
+        return "redirect:/livros/lista";
+    }
+
+    @GetMapping("/editar/{index}")
+    public String editar(@PathVariable int index, Model model) {
+        model.addAttribute("livro", livros.get(index));
+        model.addAttribute("index", index);
+        return "livros/formulario";
+    }
+
+    @GetMapping("/excluir/{index}")
+    public String excluir(@PathVariable int index) {
+        livros.remove(index);
+        return "redirect:/livros/lista";
     }
 
     @GetMapping("/livro")

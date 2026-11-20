@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,12 +21,6 @@ import java.util.List;
 public class EmprestimoController {
 
     private List<Emprestimo> emprestimos = new ArrayList<>();
-
-    @PostMapping
-    public String emprestar(@ModelAttribute Emprestimo emprestimo) {
-        emprestimos.add(emprestimo);
-        return "redirect:/emprestimos";
-    }
 
     @GetMapping
     public String listar(Model model) {
@@ -42,5 +38,41 @@ public class EmprestimoController {
 
         model.addAttribute("emprestimo", emprestimo);
         return "emprestimos/formulario";
+    }
+
+    @PostMapping
+    public String salvar(@ModelAttribute Emprestimo emprestimo, @RequestParam(required = false) Integer index) {
+        if (index == null) {
+            emprestimos.add(emprestimo);
+        } else {
+            emprestimos.set(index, emprestimo);
+        }
+        return "redirect:/emprestimos";
+    }
+
+    @GetMapping("/editar/{index}")
+    public String editar(@PathVariable int index, Model model) {
+        Emprestimo emprestimo = emprestimos.get(index);
+        if (emprestimo.getLivro() == null) {
+            emprestimo.setLivro(new Livro());
+        }
+        if (emprestimo.getUsuario() == null) {
+            emprestimo.setUsuario(new Usuario());
+        }
+        model.addAttribute("emprestimo", emprestimo);
+        model.addAttribute("index", index);
+        return "emprestimos/formulario";
+    }
+
+    @GetMapping("/excluir/{index}")
+    public String excluir(@PathVariable int index) {
+        emprestimos.remove(index);
+        return "redirect:/emprestimos";
+    }
+
+    @GetMapping("/devolver/{index}")
+    public String devolver(@PathVariable int index) {
+        emprestimos.get(index).setDataDevolucao(LocalDate.now());
+        return "redirect:/emprestimos";
     }
 }

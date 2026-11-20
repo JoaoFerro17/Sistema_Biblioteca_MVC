@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca | Livros</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/navbar :: topo('Acervo', 'Livros', '+ Novo Livro', '/livros/novo')}"></header>
+
+<main class="container">
+    <div th:if="${#lists.isEmpty(livros)}" class="paper-card empty-paper">
+        Nenhum livro cadastrado ainda. Clique em <strong>+ Novo Livro</strong> para adicionar.
+    </div>
+
+    <section th:if="${!#lists.isEmpty(livros)}" class="books-grid">
+        <article th:each="item, stat : ${livros}" class="paper-card book-card">
+            <div>
+                <h3 th:text="${item.titulo}">Título do Livro</h3>
+                <p class="meta"><strong>Autor:</strong> <span th:text="${item.autor}">Autor</span></p>
+                <p class="meta"><strong>ISBN:</strong> <span th:text="${item.isbn}">ISBN</span></p>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{/livros/editar/{index}(index=${stat.index})}" class="btn-sm">Editar</a>
+                <a th:href="@{/livros/excluir/{index}(index=${stat.index})}" class="btn-sm btn-sm-danger">Excluir</a>
+            </div>
+        </article>
+    </section>
+</main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
+
+</body>
+</html>

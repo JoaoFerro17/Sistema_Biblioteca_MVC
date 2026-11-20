@@ -3,82 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioSys | Novo Livro</title>
+    <title>Biblioteca | Cadastro de Livro</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<aside class="sidebar">
-    <a th:href="@{/livros}" class="brand">
-        <div class="ring-emblem">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-        </div>
-        <div class="brand-text">
-            <span class="brand-title">BiblioSys</span>
-            <span class="brand-subtitle">Acervo &amp; Gestão</span>
-        </div>
-    </a>
+<header th:replace="~{fragments/navbar :: topo('Acervo', ${index != null ? 'Editar Livro' : 'Novo Livro'}, null, null)}"></header>
 
-    <span class="nav-section-label">Navegação</span>
-    <nav class="nav-links">
-        <a th:href="@{/livros}">Painel Geral</a>
-        <a th:href="@{/livros/lista}" class="active">Livros</a>
-        <a th:href="@{/autores}">Autores</a>
-        <a th:href="@{/categorias}">Categorias</a>
-        <a th:href="@{/usuarios}">Usuários</a>
-        <a th:href="@{/emprestimos}">Empréstimos</a>
-    </nav>
+<main class="container">
+    <form th:action="@{/livros}" th:object="${livro}" method="post" class="form-wrapper">
+        <input type="hidden" name="index" th:if="${index != null}" th:value="${index}">
 
-    <div class="sidebar-footer">
-        Sistema de Biblioteca &bull; v1.0
-    </div>
-</aside>
-
-<div class="main-wrapper">
-    <main class="container">
-        <section class="hero-header">
-            <div class="hero-text">
-                <span class="hero-eyebrow">Catálogo</span>
-                <h1>Cadastrar Livro</h1>
-                <p>Adicione uma nova obra ao acervo da biblioteca.</p>
+        <div class="paper-card">
+            <div class="form-group">
+                <label for="titulo">Nome / Título do Livro</label>
+                <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ex: Dom Casmurro" required>
             </div>
-            <a th:href="@{/livros/lista}" class="btn-secondary">&larr; Voltar</a>
-        </section>
 
-        <div class="form-card">
-            <form th:action="@{/livros}" th:object="${livro}" method="post" class="form-stack">
-                <div class="form-group">
-                    <label>Título da Obra</label>
-                    <input type="text" th:field="*{titulo}" class="form-control" required placeholder="Ex: O Senhor dos Anéis">
-                </div>
+            <div class="form-group">
+                <label for="autor">Autor</label>
+                <input type="text" id="autor" th:field="*{autor}" placeholder="Ex: Machado de Assis" required>
+            </div>
 
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Autor</label>
-                        <input type="text" th:field="*{autor}" class="form-control" required placeholder="Ex: J.R.R. Tolkien">
-                    </div>
-
-                    <div class="form-group">
-                        <label>ISBN</label>
-                        <input type="text" th:field="*{isbn}" class="form-control" required placeholder="978-85-00-00000-0">
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <a th:href="@{/livros/lista}" class="btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn-primary">Salvar Livro</button>
-                </div>
-            </form>
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" th:field="*{isbn}" placeholder="Ex: 978-85-00-00000-0" required>
+            </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        BiblioSys &bull; Sistema de Gestão de Biblioteca &copy; 2026
-    </footer>
-</div>
+        <div style="display: flex; gap: 0.8rem;">
+            <button type="submit" class="btn-primary">Salvar Livro</button>
+            <a th:href="@{/livros/lista}" class="btn-light">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<footer class="footer">
+    Sistema de Biblioteca &copy; 2026
+</footer>
 
 </body>
 </html>
